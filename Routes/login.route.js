@@ -14,7 +14,10 @@ loginRouter.post("/", async (req, res) => {
             const hashed_password = user[0].password;
             bcrypt.compare(password, hashed_password, function (err, result) {
                 if (result) {
-                    const token = jwt.sign({ email: email,_id:user._id }, process.env.SECRET_KEY);
+                   const token = jwt.sign(
+                     { email: user[0].email, _id: user._id },
+                     process.env.SECRET_KEY
+                   );
                     res.send({ message: "Login successfull", token: token,userId:user._id });
                 }
                 else {
